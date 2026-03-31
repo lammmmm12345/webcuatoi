@@ -1,0 +1,44 @@
+<div class="max-w-2xl mx-auto my-10 bg-white dark:bg-[#1a2632] rounded-2xl shadow-xl overflow-hidden border border-gray-100 dark:border-gray-700">
+    <div class="p-8">
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+            <img src="{{ booking.anh_dai_dien }}" class="w-full md:w-48 h-32 object-cover rounded-xl shadow-md">
+            
+            <div class="flex-1">
+                <h2 class="text-xl md:text-2xl font-bold text-primary mb-4 leading-tight">
+                    {{ booking.ten_tour }}
+                </h2>
+                
+                <div class="space-y-3 text-gray-600 dark:text-gray-300">
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400">calendar_month</span>
+                        <span class="font-medium text-sm">Ngày đi:</span>
+                        <span class="text-sm">{{ booking.ngay_khoi_hanh }}</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400">groups</span>
+                        <span class="font-medium text-sm">Số khách:</span>
+                        <span class="text-sm">{{ booking.so_nguoi }} người</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-gray-400">info</span>
+                        <span class="font-medium text-sm">Trạng thái:</span>
+                        <span class="px-2 py-0.5 rounded text-xs font-bold bg-amber-100 text-amber-700">
+                            {{ booking.trang_thai }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-gray-50 dark:bg-[#232d38] p-8 border-t border-gray-100 dark:border-gray-700">
+        <div class="flex justify-between items-center">
+            <span class="text-lg md:text-xl font-bold text-gray-700 dark:text-gray-200">Tổng thanh toán:</span>
+            <span class="text-3xl md:text-4xl font-black text-red-500 tracking-tight">
+                {{ booking.tong_tien }}
+            </span>
+        </div>
+    </div>
+</div>

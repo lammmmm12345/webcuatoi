@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Xác nhận Đặt Tour - DuLich VietNam</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script> tailwind.config = { theme: { extend: { colors: { "primary": "#0f92f0", "background-light": "#f5f7f8" }, fontFamily: { "display": ["Be Vietnam Pro", "sans-serif"] }}}} </script>
+</head>
+<body class="bg-background-light text-[#111518] font-display min-h-screen flex flex-col">
+
+<div class="bg-white shadow-sm py-4 px-10">
+    <div class="max-w-[1280px] mx-auto flex justify-between items-center">
+        <a href="{% url 'dashboard' %}" class="flex items-center gap-2 text-primary font-bold text-xl">
+            <span class="material-symbols-outlined">travel_explore</span> DuLich VietNam
+        </a>
+        <div class="font-medium text-gray-600">Xin chào, {{ user.last_name }} {{ user.first_name }}</div>
+    </div>
+</div>
+
+<main class="flex-grow flex items-center justify-center py-10 px-4">
+    <div class="max-w-2xl w-full bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <div class="bg-primary/10 p-6 border-b border-gray-100 flex items-center gap-4">
+            <span class="material-symbols-outlined text-4xl text-primary">receipt_long</span>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Xác nhận thông tin đặt tour</h1>
+                <p class="text-sm text-gray-500">Vui lòng kiểm tra lại thông tin trước khi thanh toán</p>
+            </div>
+        </div>
+
+        <div class="p-6 flex flex-col md:flex-row gap-6">
+            <img src="{{ anh_dai_dien }}" class="w-full md:w-1/3 h-32 object-cover rounded-xl shadow-sm" alt="Tour">
+            <div class="flex-1 space-y-3 text-sm">
+                <h2 class="text-xl font-bold text-primary leading-tight">{{ ten_tour }}</h2>
+                <div class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-base">calendar_month</span> <b>Ngày đi:</b> {{ ngay_khoi_hanh }}</div>
+                <div class="flex items-center gap-2 text-gray-600"><span class="material-symbols-outlined text-base">group</span> <b>Số khách:</b> {{ nguoi_lon }} Người lớn, {{ tre_em }} Trẻ em</div>
+            </div>
+        </div>
+
+        <div class="bg-gray-50 p-6 border-t border-gray-100 flex justify-between items-center">
+            <span class="text-gray-600 font-bold text-lg">Tổng thanh toán:</span>
+            <span class="text-3xl font-black text-red-500">{{ tong_tien_hien_thi }}</span>
+        </div>
+
+       <div class="p-6 flex gap-4 bg-white border-t border-gray-100">
+    <a href="javascript:history.back()" class="flex-1 text-center py-3 rounded-xl border border-gray-300 text-gray-700 font-bold hover:bg-gray-50 transition-colors">Quay lại sửa</a>
+    
+    <form method="POST" action="{% url 'luu_dat_tour' %}" class="flex-[2]">
+        {% csrf_token %}
+        <input type="hidden" name="tour_id" value="{{ tour_id }}">
+        <input type="hidden" name="ngay_khoi_hanh" value="{{ ngay_khoi_hanh }}">
+        <input type="hidden" name="nguoi_lon" value="{{ nguoi_lon }}">
+        <input type="hidden" name="tre_em" value="{{ tre_em }}">
+        <input type="hidden" name="tong_tien_so" value="{{ tong_tien_so }}">
+        
+        <button type="submit" class="w-full h-full py-3 rounded-xl bg-primary hover:bg-blue-600 text-white font-bold transition-colors shadow-lg">
+            Xác nhận & Đặt tour
+        </button>
+    </form>
+    </div>
+    </div>
+</main>
+
+</body></html>

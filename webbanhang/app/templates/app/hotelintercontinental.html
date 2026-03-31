@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>InterContinental Danang Sun Peninsula Resort - Nghỉ dưỡng siêu sang bên biển</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f92f0",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                        "hover": "0 10px 25px -5px rgba(15, 146, 240, 0.15), 0 8px 10px -6px rgba(15, 146, 240, 0.1)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: "Be Vietnam Pro", sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white font-display overflow-x-hidden">
+<div class="sticky top-0 z-50 w-full bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="layout-container flex justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[1280px]">
+<header class="flex items-center justify-between whitespace-nowrap px-4 md:px-10 py-4">
+<div class="flex items-center gap-4 text-[#111518] dark:text-white cursor-pointer">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">travel_explore</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em] text-primary">DuLich VietNam</h2>
+</div>
+<div class="hidden lg:flex flex-1 justify-center gap-8">
+<nav class="flex items-center gap-8">
+<a class="text-[#60798a] dark:text-white text-sm font-semibold hover:text-primary transition-colors" href="{% url 'dashboard' %}">Trang chủ</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'tour' %}">Tour du lịch</a>
+<a class="text-[#111518] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'hotel' %}">Khách sạn</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'lienhe' %}">Liên hệ</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'gioi_thieu' %}">Giới thiệu</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+    {% if user.is_authenticated %}
+          <div class="relative group">
+            <button class="flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all border border-transparent hover:border-gray-200">
+                <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                    <span class="material-symbols-outlined">account_circle</span>
+                </div>
+                <div class="hidden md:flex flex-col items-start text-left">
+                    <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Thành viên</span>
+                    <span class="text-sm font-bold text-[#111518] dark:text-white">{{ user.last_name }} {{ user.first_name }}</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400 group-hover:rotate-180 transition-transform">expand_more</span>
+            </button>
+            
+            <div class="absolute right-0 mt-2 w-80 bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 p-4 origin-top-right max-h-[85vh] overflow-y-auto hide-scrollbar flex flex-col">
+                <div class="pb-4 mb-4 border-b border-gray-100 dark:border-gray-700 shrink-0">
+                    <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                        <span class="material-symbols-outlined text-sm">mail</span>
+                        {{ user.email }}
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                        <span class="material-symbols-outlined text-sm">phone_iphone</span>
+                        {{ user.so_dien_thoai }}
+                    </div>
+                </div>
+                
+                <div class="mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-500 text-sm">luggage</span> 
+                        TOUR BẠN ĐÃ ĐẶT
+                    </p>
+                    <div class="space-y-3 max-h-48 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for b_tour in booked_tours %}
+                        <a href="/{{ b_tour.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <img src="{{ b_tour.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1">{{ b_tour.name }}</p>
+                                <p class="text-[10px] text-gray-500 mt-0.5">Ngày đi: <span class="font-semibold">{{ b_tour.ngay_khoi_hanh }}</span></p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-[10px] font-bold text-primary">{{ b_tour.tong_tien }}</span>
+                                    {% if b_tour.trang_thai == 'Đã xác nhận' %}
+                                        {% if b_tour.da_danh_gia %}
+                                            <span class="text-[9px] px-2 py-0.5 rounded bg-gray-100 text-gray-500 font-bold flex items-center gap-1">
+                                                <span class="material-symbols-outlined text-[10px]">check_circle</span> Đã đánh giá
+                                            </span>
+                                        {% else %}
+                                            <span href="/{{ b_tour.link_chi_tiet }}?booking_id={{ b_tour.id }}#danh-gia" class="text-[9px] px-2 py-0.5 rounded bg-green-100 text-green-700 font-bold hover:bg-green-500 hover:text-white transition-colors flex items-center gap-1 z-10 relative">
+                                                <span class="material-symbols-outlined text-[10px]">edit_square</span> Đánh giá
+                                            </span>
+                                        {% endif %}
+                                    {% elif b_tour.trang_thai == 'Đã hủy' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-bold">{{ b_tour.trang_thai }}</span>
+                                    {% else %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold">{{ b_tour.trang_thai }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa đặt tour nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-500 text-sm">bed</span> 
+                        KHÁCH SẠN BẠN ĐÃ ĐẶT
+                    </p>
+                    <div class="space-y-3 max-h-48 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for b_hotel in booked_hotels %}
+                        <a href="/khach-san/{{ b_hotel.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <img src="{{ b_hotel.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1">{{ b_hotel.name }}</p>
+                                <p class="text-[10px] text-gray-500 mt-0.5">{{ b_hotel.ngay_nhan }} <span class="mx-1">đến</span> {{ b_hotel.ngay_tra }}</p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-[10px] font-bold text-primary">{{ b_hotel.tong_tien }}</span>
+                                    {% if b_hotel.trang_thai == 'Đã hủy' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% elif b_hotel.trang_thai == 'Đã xác nhận' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 text-green-700 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% else %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa đặt phòng nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-red-500 text-sm filled">favorite</span> 
+                        TOUR BẠN ĐÃ YÊU THÍCH
+                    </p>
+
+                   <div class="space-y-3 max-h-60 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for fav in fav_tours %}
+                        <a href="/{{ fav.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 group/item transition-colors">
+                            <img src="{{ fav.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1 group-hover/item:text-primary">{{ fav.name }}</p>
+                                <p class="text-[10px] text-primary font-bold mt-1">{{ fav.price }}</p>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa yêu thích tour nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <a href="{% url 'dx' %}" class="flex items-center justify-center gap-2 w-full py-2.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-sm font-bold transition-all shrink-0 mt-auto">
+                    <span class="material-symbols-outlined text-sm">logout</span> Đăng xuất
+                </a>
+            </div>
+        </div>
+    {% else %}
+    <div class="flex items-center gap-6 pr-2">
+        <a href="{% url 'dk' %}" class="text-[#111518] dark:text-white text-sm font-bold hover:text-primary transition-colors">Đăng ký</a>
+        <a href="{% url 'dn' %}" class="text-[#111518] dark:text-white text-sm font-bold hover:text-primary transition-colors">Đăng nhập</a>
+    </div>
+{% endif %}
+</div>
+</header>
+</div>
+</div>
+</div>
+
+{% if messages %}
+    <div class="fixed top-20 right-5 z-[9999] flex flex-col gap-2">
+        {% for message in messages %}
+            <div class="p-4 rounded-lg shadow-2xl text-white text-sm font-bold transition-all duration-300 ease-in-out transform hover:scale-105 
+                {% if message.tags == 'success' %} bg-green-500 
+                {% elif message.tags == 'error' %} bg-red-500 
+                {% elif message.tags == 'warning' %} bg-yellow-500 text-gray-900
+                {% else %} bg-blue-500 {% endif %}">
+                <div class="flex items-center justify-between gap-4">
+                    <span>{{ message }}</span>
+                    <button type="button" class="ml-4 text-white hover:text-gray-200 focus:outline-none" onclick="this.parentElement.parentElement.style.display='none';">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<main class="pt-10 pb-20 max-w-7xl mx-auto px-8">
+<header class="mb-10">
+<nav class="flex text-sm text-gray-500 mb-4 gap-2 items-center">
+<span>Khách sạn</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span>Đà Nẵng</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-medium">{{ ten_khach_san|default:'Khách sạn nổi bật' }}</span>
+</nav>
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-3">{{ ten_khach_san|default:'Khách sạn nổi bật' }}</h1>
+<div class="flex items-center gap-4 text-gray-500">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span class="text-sm">Bãi Bắc, Bán đảo Sơn Trà, Đà Nẵng</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-3 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+</div>
+</div>
+</header>
+<section class="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-4 h-[500px] mb-16 overflow-hidden">
+<div class="md:col-span-2 md:row-span-2 rounded-xl overflow-hidden relative group">
+<img alt="InterContinental Danang Sun Peninsula Resort Toàn Cảnh Sườn Núi" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="InterContinental Danang Sun Peninsula Resort panoramic hillside ocean view" src="https://danangfantasticity.com/wp-content/uploads/2024/04/Beach-Villa-terrace-and-pool-intercontinental-danang-sun-peninsula-resort-2.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</div>
+<div class="rounded-xl overflow-hidden relative group">
+<img alt="Biệt Thự Sang Trọng InterContinental Danang" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Luxury villa with private pool at InterContinental Danang" src="https://images.unsplash.com/photo-1540541338287-41700207dee6?w=600"/>
+</div>
+<div class="rounded-xl overflow-hidden relative group">
+<img alt="Hồ Bơi Vô Cực View Biển InterContinental" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Infinity pool overlooking the ocean at InterContinental Danang" src="https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=600&q=80"/>
+</div>
+<div class="md:col-span-2 rounded-xl overflow-hidden relative group">
+<img alt="Nhà Hàng La Maison 1888 InterContinental Danang" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="La Maison 1888 fine dining restaurant with sea view at InterContinental Danang" src="https://i.amazingo.vn/cache/832x468/130566_hotelimage_ViewfromSunPeninsulaResidenceVillas.jpg"/>
+</div>
+</section>
+
+<div class="flex flex-col lg:flex-row gap-12">
+<div class="lg:w-2/3">
+<section class="mb-12">
+<h2 class="text-2xl font-bold mb-6 text-[#111518] dark:text-white">Về khách sạn</h2>
+<p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-4">
+                        InterContinental Danang Sun Peninsula Resort là khu nghỉ dưỡng 5 sao đẳng cấp quốc tế, tọa lạc trên sườn núi bán đảo Sơn Trà thơ mộng, Đà Nẵng. Được thiết kế bởi kiến trúc sư danh tiếng Bill Bensley, resort sở hữu kiến trúc độc đáo pha trộn giữa phong cách Đông Dương và hiện đại, hòa mình hoàn toàn vào thiên nhiên nhiệt đới — một bên là rừng nguyên sinh xanh mát, một bên là làn nước biển xanh ngắt tuyệt đẹp của vịnh Đà Nẵng.
+                    </p>
+<p class="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
+                        Đắm mình trong trải nghiệm đỉnh cao với bãi biển riêng yên tĩnh, spa thư giãn toàn diện và nhà hàng La Maison 1888 được đề cử Michelin — nơi phục vụ ẩm thực Pháp tinh tế dưới sự dẫn dắt của các bậc thầy nấu ăn thế giới. Hệ thống cáp treo nội khu độc đáo đưa du khách dạo quanh resort giữa tán rừng xanh và mặt biển lấp lánh. InterContinental Danang là lựa chọn tuyệt vời cho kỳ nghỉ sang trọng, tuần trăng mật đặc biệt hay những chuyến đi VIP khó quên.
+                    </p>
+</section>
+<section class="mb-16">
+<h2 class="text-2xl font-bold mb-8 text-[#111518] dark:text-white">Tiện nghi nổi bật</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">wifi</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Wi-Fi miễn phí</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">pool</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Hồ bơi vô cực</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">beach_access</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Bãi biển riêng</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">spa</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Spa cao cấp</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">fitness_center</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Phòng Gym</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">restaurant</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Nhà hàng Michelin</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">local_bar</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Bar & Lounge</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">concierge</span>
+<span class="text-gray-600 dark:text-gray-300 font-medium">Dịch vụ quản gia</span>
+</div>
+</div>
+</section>
+</div>
+
+<aside class="lg:w-1/3">
+    <div class="sticky top-28 space-y-8">
+        <div class="bg-white dark:bg-[#1a2632] p-8 rounded-2xl shadow-xl shadow-gray-200 dark:shadow-none border border-gray-100 dark:border-gray-700">
+            <div class="flex justify-between items-end mb-6">
+                <div>
+                    <span class="text-sm text-gray-500">Giá chỉ từ</span>
+                    <div class="text-2xl font-extrabold text-primary">{{ gia_hien_thi }}<span class="text-sm font-medium text-gray-500">/đêm</span></div>
+                </div>
+                <div class="bg-blue-50 text-blue-600 px-3 py-1 rounded text-xs font-bold uppercase tracking-tight">Ưu đãi đặc biệt</div>
+            </div>
+            
+            <form id="booking-form" method="POST" action="{% url 'luu_dat_khach_san' %}">
+                {% csrf_token %}
+                <input type="hidden" name="khach_san_id" value="{{ khach_san_id }}">
+                <input type="hidden" name="tong_tien_so" id="hidden-tong-tien" value="{{ gia_mot_dem }}">
+                
+                <div class="space-y-4 mb-8">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-3 bg-gray-50 dark:bg-[#101a22] rounded-lg border border-gray-200 dark:border-gray-600">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Nhận phòng</label>
+                            <input type="date" name="ngay_nhan" id="check-in" required onchange="calculateHotelPrice()" class="w-full bg-transparent border-none text-sm font-medium p-0 focus:ring-0 text-[#111518] dark:text-white cursor-pointer">
+                        </div>
+                        <div class="p-3 bg-gray-50 dark:bg-[#101a22] rounded-lg border border-gray-200 dark:border-gray-600">
+                            <label class="block text-[10px] font-bold text-gray-500 uppercase mb-1">Trả phòng</label>
+                            <input type="date" name="ngay_tra" id="check-out" required onchange="calculateHotelPrice()" class="w-full bg-transparent border-none text-sm font-medium p-0 focus:ring-0 text-[#111518] dark:text-white cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-3 mb-8 border-t border-gray-200 dark:border-gray-700 pt-6">
+                    <div class="flex justify-between text-gray-600 dark:text-gray-300">
+                        <span>{{ gia_hien_thi }} x <span id="total-nights">1 đêm</span></span>
+                        <span id="sub-total">{{ gia_hien_thi }}</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-bold pt-2 border-t border-gray-200 dark:border-gray-700 mt-2">
+                        <span>Tổng cộng</span>
+                        <span class="text-primary" id="total-price">{{ gia_hien_thi }}</span>
+                    </div>
+                </div>
+
+                <button type="button" onclick="showConfirmModal()" class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-blue-600 transition-all shadow-lg shadow-blue-500/30">
+                    Đặt phòng ngay
+                </button>
+                <p class="text-center text-[10px] text-gray-500 mt-4">Không thu phí hủy phòng trước 48h</p>
+            </form>
+        </div>
+    </div>
+</aside>
+</div>
+</main>
+
+<footer class="w-full mt-24 bg-white dark:bg-[#1a2632] border-t border-gray-200 dark:border-gray-800 text-sm">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-8 py-16 max-w-7xl mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="text-xl font-bold text-[#111518] dark:text-white mb-6">DuLich VietNam</div>
+<p class="text-gray-500 dark:text-gray-400">Người bạn đồng hành tin cậy trên mọi hành trình khám phá thế giới của bạn.</p>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-[#111518] dark:text-white">Dịch vụ</h4>
+<ul class="space-y-4">
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Về chúng tôi</a></li>
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Tour du lịch</a></li>
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Khách sạn</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-[#111518] dark:text-white">Hỗ trợ</h4>
+<ul class="space-y-4">
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Liên hệ</a></li>
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Câu hỏi thường gặp</a></li>
+<li><a class="text-gray-500 dark:text-gray-400 hover:text-primary transition-all" href="#">Chính sách bảo mật</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 text-[#111518] dark:text-white">Kết nối</h4>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-gray-500 cursor-pointer">social_leaderboard</span>
+<span class="material-symbols-outlined text-gray-500 cursor-pointer">language</span>
+<span class="material-symbols-outlined text-gray-500 cursor-pointer">mail</span>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 py-8 border-t border-gray-200 dark:border-gray-800 text-center text-gray-500 text-xs">
+            © 2026 DuLich VietNam. Tất cả quyền được bảo lưu.
+        </div>
+</footer>
+
+<div class="fixed bottom-0 left-0 right-0 md:hidden bg-white/90 dark:bg-[#1a2632]/90 backdrop-blur-xl border-t border-gray-200 dark:border-gray-800 p-4 z-40 flex items-center justify-between">
+    <div>
+        <div class="text-[10px] text-gray-500 uppercase font-bold">Từ</div>
+        <div class="text-lg font-bold text-primary">{{ gia_hien_thi }}<span class="text-xs font-normal">/đêm</span></div>
+    </div>
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="bg-primary text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-blue-500/30">Đặt phòng</button>
+</div>
+
+<div id="confirmModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity">
+    <div class="bg-white dark:bg-[#1a2632] p-8 rounded-2xl w-11/12 max-w-md shadow-2xl transform transition-transform">
+        <div class="text-center mb-6">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
+                <span class="material-symbols-outlined text-primary text-2xl">bed</span>
+            </div>
+            <h3 class="text-xl font-bold text-[#111518] dark:text-white">Xác nhận đặt phòng</h3>
+            <p class="text-sm text-gray-500 mt-2">Vui lòng kiểm tra lại thông tin chuyến đi</p>
+        </div>
+        
+        <div class="bg-gray-50 dark:bg-[#101a22] p-4 rounded-xl space-y-3 mb-6 text-sm text-[#111518] dark:text-gray-300 border border-gray-100 dark:border-gray-700">
+            <div class="flex justify-between"><span class="text-gray-500">Khách sạn:</span> <span class="font-bold text-right">{{ ten_khach_san }}</span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Nhận phòng:</span> <span id="modal-checkin" class="font-bold"></span></div>
+            <div class="flex justify-between"><span class="text-gray-500">Trả phòng:</span> <span id="modal-checkout" class="font-bold"></span></div>
+            <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-600 flex justify-between items-center">
+                <span class="text-gray-500 font-bold">Tổng thanh toán:</span> 
+                <span id="modal-total" class="text-primary font-bold text-lg"></span>
+            </div>
+        </div>
+        
+        <div class="flex gap-3">
+            <button type="button" onclick="closeConfirmModal()" class="flex-1 py-3 rounded-xl bg-gray-100 dark:bg-gray-700 font-bold hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-[#111518] dark:text-white">Hủy</button>
+            <button type="button" onclick="submitBookingForm()" class="flex-1 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/30">Xác nhận</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculateHotelPrice() {
+        const pricePerNight = parseInt("{{ gia_mot_dem }}") || 0;
+        const checkInVal = document.getElementById('check-in').value;
+        const checkOutVal = document.getElementById('check-out').value;
+
+        if (checkInVal && checkOutVal) {
+            const checkIn = new Date(checkInVal);
+            const checkOut = new Date(checkOutVal);
+            
+            if (checkOut <= checkIn) {
+                alert("Ngày trả phòng phải sau ngày nhận phòng!");
+                document.getElementById('check-out').value = "";
+                return;
+            }
+
+            const diffTime = Math.abs(checkOut - checkIn);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const total = diffDays * pricePerNight;
+
+            document.getElementById('total-nights').innerText = diffDays + ' đêm';
+            document.getElementById('sub-total').innerText = total.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('total-price').innerText = total.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('hidden-tong-tien').value = total;
+        }
+    }
+
+    function checkLoginBeforeBooking() {
+        {% if not user.is_authenticated %}
+            alert("Vui lòng đăng nhập để đặt phòng khách sạn!");
+            window.location.href = "{% url 'dn' %}";
+            return false;
+        {% endif %}
+        return true;
+    }
+
+    function showConfirmModal() {
+        if(!checkLoginBeforeBooking()) return; 
+        
+        const checkInVal = document.getElementById('check-in').value;
+        const checkOutVal = document.getElementById('check-out').value;
+        
+        if(!checkInVal || !checkOutVal) {
+            alert("Vui lòng chọn ngày Nhận phòng và Trả phòng!");
+            return;
+        }
+        
+        const formatIn = checkInVal.split('-').reverse().join('/');
+        const formatOut = checkOutVal.split('-').reverse().join('/');
+        
+        document.getElementById('modal-checkin').innerText = formatIn;
+        document.getElementById('modal-checkout').innerText = formatOut;
+        document.getElementById('modal-total').innerText = document.getElementById('total-price').innerText;
+        
+        document.getElementById('confirmModal').classList.remove('hidden');
+        document.getElementById('confirmModal').classList.add('flex');
+    }
+
+    function closeConfirmModal() {
+        document.getElementById('confirmModal').classList.add('hidden');
+        document.getElementById('confirmModal').classList.remove('flex');
+    }
+
+    function submitBookingForm() {
+        document.getElementById('booking-form').submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+
+        document.getElementById('check-in').min = today.toISOString().split('T')[0];
+        document.getElementById('check-out').min = tomorrow.toISOString().split('T')[0];
+    });
+</script>
+</body></html>

@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DuLich VietNam - Khám phá vẻ đẹp Việt Nam</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f92f0",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101a22",
+                    },
+                    fontFamily: {
+                        "display": ["Be Vietnam Pro", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
+                        "hover": "0 10px 25px -5px rgba(15, 146, 240, 0.15), 0 8px 10px -6px rgba(15, 146, 240, 0.1)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: "Be Vietnam Pro", sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111518] dark:text-white font-display overflow-x-hidden">
+
+<div class="sticky top-0 z-50 w-full bg-white dark:bg-[#1a2632] shadow-sm">
+<div class="layout-container flex justify-center">
+<div class="layout-content-container flex flex-col w-full max-w-[1280px]">
+<header class="flex items-center justify-between whitespace-nowrap px-4 md:px-10 py-4">
+<div class="flex items-center gap-4 text-[#111518] dark:text-white cursor-pointer">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-4xl">travel_explore</span>
+</div>
+<h2 class="text-xl font-bold leading-tight tracking-[-0.015em] text-primary">DuLich VietNam</h2>
+</div>
+<div class="hidden lg:flex flex-1 justify-center gap-8">
+<nav class="flex items-center gap-8">
+<a class="text-[#60798a] dark:text-white text-sm font-semibold hover:text-primary transition-colors" href="{% url 'dashboard' %}">Trang chủ</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'tour' %}">Tour du lịch</a>
+<a class="text-[#111518] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'hotel' %}">Khách sạn</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'lienhe' %}">Liên hệ</a>
+<a class="text-[#60798a] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="{% url 'gioi_thieu' %}">Giới thiệu</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+    {% if user.is_authenticated %}
+        <div class="relative group">
+            <button class="flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all border border-transparent hover:border-gray-200">
+                <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                    <span class="material-symbols-outlined">account_circle</span>
+                </div>
+                <div class="hidden md:flex flex-col items-start text-left">
+                    <span class="text-[10px] text-gray-500 font-bold uppercase tracking-wider">Thành viên</span>
+                    <span class="text-sm font-bold text-[#111518] dark:text-white">{{ user.last_name }} {{ user.first_name }}</span>
+                </div>
+                <span class="material-symbols-outlined text-gray-400 group-hover:rotate-180 transition-transform">expand_more</span>
+            </button>
+            
+            <div class="absolute right-0 mt-2 w-80 bg-white dark:bg-[#1a2632] rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50 p-4 origin-top-right max-h-[85vh] overflow-y-auto hide-scrollbar flex flex-col">
+                <div class="pb-4 mb-4 border-b border-gray-100 dark:border-gray-700 shrink-0">
+                    <div class="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                        <span class="material-symbols-outlined text-sm">mail</span>
+                        {{ user.email }}
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                        <span class="material-symbols-outlined text-sm">phone_iphone</span>
+                        {{ user.so_dien_thoai }}
+                    </div>
+                </div>
+                
+                <div class="mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-500 text-sm">luggage</span> 
+                        TOUR BẠN ĐÃ ĐẶT
+                    </p>
+                    <div class="space-y-3 max-h-48 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for b_tour in booked_tours %}
+                        <a href="/{{ b_tour.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <img src="{{ b_tour.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1">{{ b_tour.name }}</p>
+                                <p class="text-[10px] text-gray-500 mt-0.5">Ngày đi: <span class="font-semibold">{{ b_tour.ngay_khoi_hanh }}</span></p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-[10px] font-bold text-primary">{{ b_tour.tong_tien }}</span>
+                                    {% if b_tour.trang_thai == 'Đã xác nhận' %}
+                                        {% if b_tour.da_danh_gia %}
+                                            <span class="text-[9px] px-2 py-0.5 rounded bg-gray-100 text-gray-500 font-bold flex items-center gap-1">
+                                                <span class="material-symbols-outlined text-[10px]">check_circle</span> Đã đánh giá
+                                            </span>
+                                        {% else %}
+                                            <span href="/{{ b_tour.link_chi_tiet }}?booking_id={{ b_tour.id }}#danh-gia" class="text-[9px] px-2 py-0.5 rounded bg-green-100 text-green-700 font-bold hover:bg-green-500 hover:text-white transition-colors flex items-center gap-1 z-10 relative">
+                                                <span class="material-symbols-outlined text-[10px]">edit_square</span> Đánh giá
+                                            </span>
+                                        {% endif %}
+                                    {% elif b_tour.trang_thai == 'Đã hủy' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-bold">{{ b_tour.trang_thai }}</span>
+                                    {% else %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold">{{ b_tour.trang_thai }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa đặt tour nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-blue-500 text-sm">bed</span> 
+                        KHÁCH SẠN BẠN ĐÃ ĐẶT
+                    </p>
+                    <div class="space-y-3 max-h-48 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for b_hotel in booked_hotels %}
+                        <a href="/khach-san/{{ b_hotel.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl border border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                            <img src="{{ b_hotel.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1">{{ b_hotel.name }}</p>
+                                <p class="text-[10px] text-gray-500 mt-0.5">{{ b_hotel.ngay_nhan }} <span class="mx-1">đến</span> {{ b_hotel.ngay_tra }}</p>
+                                <div class="flex justify-between items-center mt-1">
+                                    <span class="text-[10px] font-bold text-primary">{{ b_hotel.tong_tien }}</span>
+                                    {% if b_hotel.trang_thai == 'Đã hủy' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-red-50 text-red-600 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% elif b_hotel.trang_thai == 'Đã xác nhận' %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-green-100 text-green-700 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% else %}
+                                        <span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 font-bold">{{ b_hotel.trang_thai }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa đặt phòng nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-xs text-gray-400 font-bold mb-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-red-500 text-sm filled">favorite</span> 
+                        TOUR BẠN ĐÃ YÊU THÍCH
+                    </p>
+                    <div id="navbar-fav-list" class="space-y-3 max-h-60 overflow-y-auto pr-1 hide-scrollbar">
+                        {% for fav in fav_tours %}
+                        <a id="fav-item-{{ fav.id }}" href="/{{ fav.link_chi_tiet }}" class="flex items-center gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 group/item transition-colors">
+                            <img src="{{ fav.anh_dai_dien }}" class="size-12 rounded-lg object-cover shadow-sm">
+                            <div class="flex-1">
+                                <p class="text-xs font-bold text-[#111518] dark:text-white line-clamp-1 group-hover/item:text-primary">{{ fav.name }}</p>
+                                <p class="text-[10px] text-primary font-bold mt-1">{{ fav.price }}</p>
+                            </div>
+                        </a>
+                        {% empty %}
+                        <p id="empty-fav-msg" class="text-center py-4 text-xs text-gray-400 italic">Bạn chưa yêu thích tour nào.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <a href="{% url 'dx' %}" class="flex items-center justify-center gap-2 w-full py-2.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-sm font-bold transition-all shrink-0 mt-auto">
+                    <span class="material-symbols-outlined text-sm">logout</span> Đăng xuất
+                </a>
+            </div>
+        </div>
+    {% else %}
+    <div class="flex items-center gap-6 pr-2">
+        <a href="{% url 'dk' %}" class="text-[#111518] dark:text-white text-sm font-bold hover:text-primary transition-colors">Đăng ký</a>
+        <a href="{% url 'dn' %}" class="text-[#111518] dark:text-white text-sm font-bold hover:text-primary transition-colors">Đăng nhập</a>
+    </div>
+    {% endif %}
+</div>
+</header>
+</div>
+</div>
+</div>
+
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-4 md:px-8 py-6">
+    <div class="flex flex-col lg:flex-row gap-8 mt-4">
+        
+        <aside class="w-full lg:w-[300px] flex-shrink-0 space-y-6">
+            <div class="bg-white dark:bg-[#1a2632] rounded-xl p-5 border border-[#dbe1e6] dark:border-gray-700 shadow-sm">
+                <h3 class="text-lg font-bold text-[#111518] dark:text-white mb-4">Tìm kiếm</h3>
+                
+                <form method="GET" action="{% url 'hotel' %}" class="relative">
+                    <input type="text" name="tu_khoa" value="{{ tu_khoa }}" class="w-full h-12 pl-10 pr-4 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-[#101a22] text-[#111518] dark:text-white placeholder:text-[#60798a] focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="Tên khách sạn..."/>
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#60798a]" style="font-size: 20px;">search</span>
+                    <button type="submit" class="hidden"></button>
+                </form>
+            </div>
+        </aside>
+
+        <section class="flex-1 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <div>
+                    <h1 class="text-[#111518] dark:text-white text-2xl md:text-3xl font-bold leading-tight">Khách sạn nổi bật</h1>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {% for h in hotels %}
+                <div class="group bg-white dark:bg-[#1a2632] rounded-xl border border-[#dbe1e6] dark:border-gray-700 overflow-hidden hover:shadow-lg transition-shadow duration-300 flex flex-col h-full">
+                    <div class="relative h-48 w-full overflow-hidden">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="{{ h.anh_dai_dien }}" alt="{{ h.name }}"/>
+                    </div>
+                    
+                    <div class="p-4 flex flex-col flex-1">
+                        <div class="mb-2">
+                            <h3 class="text-lg font-bold text-[#111518] dark:text-white leading-tight mb-1 group-hover:text-primary transition-colors">
+                                <a href="/khach-san/{{ h.link_chi_tiet }}">{{ h.name }}</a>
+                            </h3>
+                            <div class="flex items-start gap-1 text-[#60798a] dark:text-gray-400 text-sm">
+                                <span class="material-symbols-outlined text-base mt-0.5 flex-shrink-0">location_on</span>
+                                <span class="line-clamp-1">{{ h.dia_diem }}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-auto pt-4 border-t border-[#f0f3f5] dark:border-gray-700 flex items-center justify-between">
+                            <div>
+                                {% if h.gia_cu %}
+                                    <p class="text-xs text-[#60798a] dark:text-gray-400 line-through">{{ h.gia_cu }}</p>
+                                {% endif %}
+                                <p class="text-lg font-bold text-primary">{{ h.price }} <span class="text-sm font-normal text-[#111518] dark:text-gray-300">/ đêm</span></p>
+                            </div>
+                            <a href="/khach-san/{{ h.link_chi_tiet }}" class="size-10 rounded-full bg-background-light dark:bg-gray-700 hover:bg-primary hover:text-white transition-colors flex items-center justify-center text-[#111518] dark:text-white">
+                                <span class="material-symbols-outlined">arrow_forward</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-span-full py-10 text-center text-gray-500">
+                    <span class="material-symbols-outlined text-5xl mb-2">search_off</span>
+                    <p class="text-lg">Không tìm thấy khách sạn nào khớp với từ khóa "{{ tu_khoa }}".</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if hotels.paginator.num_pages > 1 %}
+            <div class="flex justify-center mt-10">
+                <nav class="flex items-center gap-2">
+                    {% if hotels.has_previous %}
+                    <a href="?page={{ hotels.previous_page_number }}&{{ query_string }}" class="size-10 flex items-center justify-center rounded-lg border border-[#dbe1e6] dark:border-gray-600 hover:bg-[#f0f3f5] dark:hover:bg-gray-700 text-[#111518] dark:text-white">
+                        <span class="material-symbols-outlined text-sm">arrow_back_ios_new</span>
+                    </a>
+                    {% else %}
+                    <button disabled class="size-10 flex items-center justify-center rounded-lg border border-[#dbe1e6] dark:border-gray-600 text-gray-400 opacity-50 cursor-not-allowed">
+                        <span class="material-symbols-outlined text-sm">arrow_back_ios_new</span>
+                    </button>
+                    {% endif %}
+
+                    {% for num in hotels.paginator.page_range %}
+                        {% if hotels.number == num %}
+                        <span class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">{{ num }}</span>
+                        {% elif num > hotels.number|add:'-3' and num < hotels.number|add:'3' %}
+                        <a href="?page={{ num }}&{{ query_string }}" class="size-10 flex items-center justify-center rounded-lg border border-[#dbe1e6] dark:border-gray-600 hover:bg-[#f0f3f5] dark:hover:bg-gray-700 text-[#111518] dark:text-white font-medium">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if hotels.has_next %}
+                    <a href="?page={{ hotels.next_page_number }}&{{ query_string }}" class="size-10 flex items-center justify-center rounded-lg border border-[#dbe1e6] dark:border-gray-600 hover:bg-[#f0f3f5] dark:hover:bg-gray-700 text-[#111518] dark:text-white">
+                        <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+                    </a>
+                    {% else %}
+                    <button disabled class="size-10 flex items-center justify-center rounded-lg border border-[#dbe1e6] dark:border-gray-600 text-gray-400 opacity-50 cursor-not-allowed">
+                        <span class="material-symbols-outlined text-sm">arrow_forward_ios</span>
+                    </button>
+                    {% endif %}
+                </nav>
+            </div>
+            {% endif %}
+            
+        </section>
+    </div>
+</main>
+
+<footer class="bg-white dark:bg-[#101a22] border-t border-[#f0f3f5] dark:border-gray-800 py-10 px-4 md:px-10 mt-auto">
+<div class="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+<div class="space-y-4">
+<div class="flex items-center gap-2 text-[#111518] dark:text-white">
+<div class="size-6 text-primary">
+<svg class="w-full h-full" fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill-rule="evenodd"></path>
+</svg>
+</div>
+<span class="font-bold text-lg">DuLich VietNam</span>
+</div>
+<p class="text-[#60798a] dark:text-gray-400 text-sm">Khám phá vẻ đẹp Việt Nam cùng chúng tôi. Trải nghiệm du lịch tuyệt vời với giá tốt nhất.</p>
+</div>
+<div>
+<h4 class="font-bold text-[#111518] dark:text-white mb-4">Về chúng tôi</h4>
+<ul class="space-y-2 text-sm text-[#60798a] dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Giới thiệu</a></li>
+<li><a class="hover:text-primary" href="#">Tuyển dụng</a></li>
+<li><a class="hover:text-primary" href="#">Blog du lịch</a></li>
+<li><a class="hover:text-primary" href="#">Liên hệ</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-[#111518] dark:text-white mb-4">Hỗ trợ</h4>
+<ul class="space-y-2 text-sm text-[#60798a] dark:text-gray-400">
+<li><a class="hover:text-primary" href="#">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-primary" href="#">Chính sách bảo mật</a></li>
+<li><a class="hover:text-primary" href="#">Điều khoản sử dụng</a></li>
+<li><a class="hover:text-primary" href="#">Quy chế hoạt động</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-[#111518] dark:text-white mb-4">Đăng ký nhận tin</h4>
+<div class="flex gap-2">
+<input class="flex-1 h-10 px-3 rounded-lg border border-[#dbe1e6] dark:border-gray-600 bg-white dark:bg-[#1a2632] text-sm text-[#111518] dark:text-white" placeholder="Email của bạn" type="email"/>
+<button class="bg-primary hover:bg-blue-600 text-white h-10 px-4 rounded-lg text-sm font-bold">Gửi</button>
+</div>
+</div>
+</div>
+<div class="max-w-[1280px] mx-auto mt-10 pt-6 border-t border-[#f0f3f5] dark:border-gray-800 text-center text-sm text-[#60798a] dark:text-gray-400">
+    © 2026 DuLich VietNam. All rights reserved.
+</div>
+</footer>
+</body></html>
